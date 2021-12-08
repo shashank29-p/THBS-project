@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8">
+      <title>Spring Shop Online</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+      <th:block th:include="/_header"></th:block>
+   </head>
+ <style type="text/css">
+     .feedback{
+        width: 300%;
+        max-width: 980px;
+        background: #fff;
+        margin: 0 auto;
+        padding: 10px;
+        box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.3);
+    }
+        .survey-hr{
+      margin:10px 0;
+      border: .5px solid #ddd;
+    }
+        .feedback form input,
+    .feedback form textarea{
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+    
+    
+    
+    
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: arial;
+}
+.star-rating form {
+    display: none;
+}
+.star-rating .thanks-msg {
+    display: none;
+    font-size: 20px;
+    margin: 40px auto;
+    color: #4caf50;
+    background-color: rgba(76, 175, 80, 0.1411764705882353);
+    padding: 8px 20px;
+    border-left: 3px solid #4caf50;
+    border-radius: 20px;
+}
+.star-rating input {
+    display: none;
+}
+.star-rating {
+    margin: 50px auto;
+    display: table;
+    width: 350px;
+}
+.star-rating label {
+    padding: 10px;
+    float: right;
+    font-size: 44px;
+    color: #eee;
+}
+.star-rating input:not(:checked) ~ label:hover,
+.star-rating input:not(:checked) ~ label:hover ~ label {
+    color: #ffc107;
+}
+.star-rating input:checked ~ label {
+    color: #ffc107;
+}
+.star-rating form .rating-reaction:before {
+    width: 100%;
+    float: left;
+    color: #ffc107;
+}
+.star-rating #rating-1:checked ~ form .rating-reaction:before {
+    content: "I hate it";
+}
+.star-rating #rating-2:checked ~ form .rating-reaction:before {
+    content: "I don't like it";
+}
+.star-rating #rating-3:checked ~ form .rating-reaction:before {
+    content: "It is good";
+}
+.star-rating #rating-4:checked ~ form .rating-reaction:before {
+    content: "I like it";
+}
+.star-rating #rating-5:checked ~ form .rating-reaction:before {
+    content: "I love it";
+}
+.star-rating input:checked ~ form {
+    border-top: 1px solid #ddd;
+    width: 100%;
+    padding-top: 15px;
+    margin-top: 15px;
+    display: inline-block;
+}
+.star-rating form .rating-reaction {
+    font-size: 24px;
+    float: left;
+    text-transform: capitalize;
+}
+.star-rating form .submit-rating {
+    border: none;
+    outline: none;
+    background: #795548;
+    color: #ffc107;
+    font-size: 18px;
+    border-radius: 4px;
+    padding: 5px 15px;
+    cursor: pointer;
+    float: right;
+}
+h1{
+text-align:center;
+}
+* {
+  box-sizing: border-box;
+}
+
+
+.heading {
+  font-size: 25px;
+  margin-right: 25px;
+}
+
+.fa {
+  font-size: 25px;
+}
+
+.checked {
+  color: orange;
+}
+
+/* Three column layout */
+.side {
+  float: left;
+  width: 15%;
+  margin-top:10px;
+}
+
+.middle {
+  margin-top:10px;
+  float: left;
+  width: 70%;
+}
+
+/* Place text to the right */
+.right {
+  text-align: 500px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* The bar container */
+.bar-container {
+  width: 80%;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+}
+
+/* Individual bars */
+.bar-5 {width: 80%; height: 18px; background-color: #04AA6D;}
+.bar-4 {width: 40%; height: 18px; background-color: #2196F3;}
+.bar-3 {width: 20%; height: 18px; background-color: #00bcd4;}
+.bar-2 {width: 4%; height: 18px; background-color: #ff9800;}
+.bar-1 {width: 10%; height: 18px; background-color: #f44336;}
+
+/* Responsive layout - make the columns stack on top of each other instead of next to each other */
+@media (max-width: 300px) {
+  .side, .middle {
+    width: 40%;
+  }
+  .right {
+    display: none;
+  }
+}
+    
+    
+ </style>
+   <body>
+      
+      <th:block th:include="/_menu"></th:block>
+          <div class="feedback">
+          <h1>FEEDBACK FORM</h1><br>
+    <p>Dear Customer,<br>
+    Thank you for using our website. Please spare some moments to give us your valuable feedback as it will help us in improving our service.</p>
+     
+    <h4>Please rate your experience </h4>
+     
+    <form method="post" >
+    <label></label>
+     <div style="color:grey">
+      <div class="star-rating">
+            <div class="thanks-msg"></div>
+            <div class="star-input">
+                <input type="radio" name="rating" id="rating-5">
+                <label for="rating-5" class="fas fa-star"></label>
+                <input type="radio" name="rating" id="rating-4">
+                <label for="rating-4" class="fas fa-star"></label>
+                <input type="radio" name="rating" id="rating-3">
+                <label for="rating-3" class="fas fa-star"></label>
+                <input type="radio" name="rating" id="rating-2">
+                <label for="rating-2" class="fas fa-star"></label>
+                <input type="radio" name="rating" id="rating-1">
+                <label for="rating-1" class="fas fa-star"></label>
+            </div>
+        </div>
+        
+      </div>
+      
+    <label for="m_3189847521540640526commentText">Any feedback:</label><br/><br/>
+    <textarea cols="75" name="commentText" rows="8" style="100%"></textarea><br>
+    <br>
+    
+    <input style="background:#43a7d5;color:#fff;padding:12px;border:0" type="submit" value="Submit your review" href="/thank"> <br><br>
+    
+     <span class="heading">User Rating</span>
+		<span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star"></span>
+	<p>4.1 average based on 254 reviews.</p>
+	<hr style="border:3px solid #f1f1f1">
+
+<div class="row">
+  <div class="side">
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;5 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-5"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>150</div>
+  </div>
+  <div class="side">
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;4 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-4"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>63</div>
+  </div>
+  <div class="side">
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;3 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-3"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>15</div>
+  </div>
+  <div class="side">
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;2 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-2"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>6</div>
+  </div>
+  <div class="side">
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;1 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-1"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div>20</div>
+  </div>
+</div>
+    
+       <br><br><br>
+    
+       
+    </form>
+    </div>
+    
+
+         
+      <!-- ------------------------------container end---------------------------------- -->
+ 
+      <th:block th:include="/_footer"></th:block>
+       
+   </body>
+</html>

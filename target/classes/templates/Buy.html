@@ -1,0 +1,143 @@
+<html>
+
+<head>
+	<title>Payments Page</title>
+	          <th:block th:if="${cartForm != null && cartForm.cartLines != null && !cartForm.cartLines.empty}">
+	         <form method="POST" th:object="${cartForm}" th:action="@{/Buy}">
+
+</head>
+
+<body>
+	<style>
+	h1 {
+		text-align: center;
+		font-size: 30px;
+		color: green;
+		background-color: skyblue;
+		}
+		h2 {
+					margin-left: 100px;
+
+		}
+		.body {
+			background-color: lightgray;
+		}
+		p1 {
+		margin-left: 100px;
+		color: red;
+		}
+		p {
+					margin-left: 100px;
+
+		}
+	</style>
+	
+</body>
+<div class="body">
+<h1>Please complete Your Shopping through below Transactions</h1><br><br>
+<div>
+  <img src=https://media.giphy.com/media/EopV0wKH3USE9F7fhe/giphy.gif style="width: 300px;margin-left: auto;margin-right: auto;padding-left: 800px;">
+</div>
+
+<h2>Transcation Methods</h2><br>
+<p1><a style="color: red" href="/payment">1. Credit / Debit Card</a></p1><br><br>
+<p1><a style="color: red" href="https://dashboard.razorpay.com/signin?screen=sign_in&next=app%2Fdashboard">2. UPI - Razorpay</a></p1><br><br>
+<p1><a style="color: red" href="/orderFinal">3. Cash On Deliver</a></p1>
+<br><br>
+
+  <th:block th:if="${cartForm == null || cartForm.cartLines == null || cartForm.cartLines.empty}">
+         <a th:href="@{/productList}"></a>
+      </th:block>
+      
+      <div class="container cart_bag">
+       <h2 style="font-weight: bold;">YOUR BAG</h2>
+      <div class="row">
+        <div class="col-lg-8 col-sm-8 col-xs-12">
+          <table class="table">
+          
+          <th:block th:if="${cartForm != null && cartForm.cartLines != null && !cartForm.cartLines.empty}">
+         <form method="POST" th:object="${cartForm}" th:action="@{/paymet}">
+          
+               <div class="product-preview-container"
+                        th:each="cartLineInfo, varStatus : ${cartForm.cartLines}">
+            <tr>
+              <td><img th:src="@{|/productImage?code=${cartLineInfo.productInfo.code}|}" width="190px"></td>
+              <td>
+                <b style="color: #000;font-size:16px; font-weight: 600" th:utext="${cartLineInfo.productInfo.name}"></b>
+                <p style="font-size: 14px;">CORE BLACK / CORE white<br>
+                SIZE: M 7.5 / W 8.5<br>
+                PRICE: <span th:utext="${cartLineInfo.productInfo.price}"></span>
+                </p>
+                
+               
+                
+                
+                        <input type="hidden"      
+                           th:name="|cartLines[${varStatus.index}].productInfo.code|"                       
+                           th:value="${cartLineInfo.productInfo.code}" />
+                <a href="" style="margin-right: 10px;">Move to Favorite</a> 
+                <a th:href="@{|/shoppingCartRemoveProduct?code=${cartLineInfo.productInfo.code}|}" style="margin-right: 10px;"> Remove</a>
+              </td>
+              <td> <input type="text" th:name="|cartLines[${varStatus.index}].quantity|" th:value="${cartLineInfo.quantity}" class="form-control" style="width: 50px; height: 35px;">
+              
+              </td>
+              <td>Rs <span th:utext="${cartLineInfo.amount}"></span></td>
+            </tr>
+              </div>
+
+            <tr >
+              <td colspan="7" align="right">
+              <input class="btn btn-dark" type="submit" value="Update Quantity" />
+              <a th:href="@{/productList}" style="margin-left: 20px;">Continue Shopping</a>
+               
+              </td>
+              <td></td>
+              <td></td>      
+            </tr>
+            
+            
+         </form>
+      </th:block>
+          </table>
+        </div> <!-- -----col-lg-8 col-sm-8 col-xs-12 end --- -->
+        <div class="col-lg-4 col-sm-4 col-xs-12">
+          <h5 style="font-weight: bold;">SUMMARY</h5>
+          <table class="table cart-subtotal">
+            <tr>
+              <td>
+                Subtotal <i></i><br><br>
+                Quantity <br><br>
+                Estimated Shipping & Handling<br><br>
+              </td>
+              <td>
+              
+              Rs <span th:utext="${myCart.amountTotal}"></span><br><br>
+              [<span th:utext="${myCart.quantityTotal}"></span> ITEMS]<br><br>
+              FREE<br><br>
+              Rs 0.0
+            </td> 
+         
+            <tr>
+              <td><b>TOTAL</b></td>
+              <td><b>Rs <span th:utext="${myCart.amountTotal}"></span></b></td> 
+            </tr>
+
+
+
+            
+          </table>
+          
+
+        </div>
+      </div>
+    </div>
+</div>   
+
+        <!-- ------------------------------footer end---------------------------------- -->
+       
+      
+       
+      <th:block th:include="/_footer"></th:block>
+       
+   </body>
+</html>

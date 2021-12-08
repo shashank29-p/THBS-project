@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8">
+      <title> Shop Online</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+      <th:block th:include="/_header"></th:block>
+      <style type="text/css">
+      h3{
+      text-align: center;
+      color: 1px solid green;
+      }
+      </style>
+   </head>
+   <body>
+      
+      <th:block th:include="/_menu"></th:block>
+       <head>
+	<title>Payments Page</title>
+	          <th:block th:if="${cartForm != null && cartForm.cartLines != null && !cartForm.cartLines.empty}">
+	         <form method="POST" th:object="${cartForm}" th:action="@{/Buy}">
+
+</head>
+
+<body>
+	<style>
+	h1 {
+		text-align: center;
+		font-size: 30px;
+		color: black;
+		background-color: yellow;
+		}
+		h2 {
+					margin-left: 100px;
+
+		}
+		.body {
+			background-color: lightgray;
+		}
+		p1 {
+		margin-left: 100px;
+		color: red;
+		}
+		p {
+					margin-left: 100px;
+
+		}
+	</style>
+	
+</body>
+<div class="body">
+<h1>Please complete Your Shopping through below Transcations</h1><br><br>
+
+<h2>Transcation Methods</h2><br>
+<p1><a style="color: red" href="/payment">1. Credit / Debit Card</a></p1><br><br>
+<p1><a style="color: red" href="https://dashboard.razorpay.com/signin?screen=sign_in&next=app%2Fdashboard">2. UPI - Razorpay</a></p1><br><br>
+<p1><a style="color: red" href="/orderFinal">3. Cash On Deliver</a></p1>
+<br><br>
+  
+      </div>
+   </body>
+</html>
