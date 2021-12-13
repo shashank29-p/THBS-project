@@ -2,12 +2,10 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -56,75 +54,66 @@ public class MainController {
       }
       System.out.println("Target=" + target);
  
-      // Case update quantity in cart
+      
       // (@ModelAttribute("cartForm") @Validated CartInfo cartForm)
       if (target.getClass() == CartInfo.class) {
  
       }
  
-      // Case save customer information.
+      
       // (@ModelAttribute @Validated CustomerInfo customerForm)
       else if (target.getClass() == CustomerForm.class) {
          dataBinder.setValidator(customerFormValidator);
       }
  
    }
- 
+   //@PostMapping("/register")
+   //public String showRegistrationForm(Model model) {
+   //   // model.addAttribute("user", new User());
+        
+    //   return "redirect:/admin/login";
+   //}
+
+   @GetMapping("/about")
+ public String getaboutpage() {
+	 return "/about";
+ }
+ @GetMapping("/brands")
+ public String getbrandpage() {
+	 return "/brands";
+ }
+ @GetMapping("/reviews")
+ public ModelAndView doreviews() {
+   ModelAndView modelAndView=new ModelAndView("reviews");
+   return modelAndView;
+ }
+@PostMapping("/reviews")
+public String showreviews(Model model) {
+ return "/thank";
+}
+
+ @GetMapping("/payment")
+ public String getPaymentpage() {
+	 return "/payment";
+ }
+   @GetMapping("/contact")
+   public String getContact(){
+      return "/contact";
+   }
+   @GetMapping("/register")
+   public ModelAndView getRegisterPage() {
+     ModelAndView modelAndView=new ModelAndView("register");
+     return modelAndView;
+   }
+@PostMapping("/register")
+public String showRegistrationForm(Model model) {
+   return "redirect:/admin/login";
+}
+
    @RequestMapping("/403")
    public String accessDenied() {
       return "/403";
    }
-   
-   @GetMapping("/register")
-	   public ModelAndView getRegisterPage() {
-	     ModelAndView modelAndView=new ModelAndView("register");
-	     return modelAndView;
-	   }
-   @PostMapping("/register")
-   public String showRegistrationForm(Model model) {
-	   return "redirect:/admin/login";
-   }
-   
-   @GetMapping("/reviews")
-   public ModelAndView doreviews() {
-     ModelAndView modelAndView=new ModelAndView("reviews");
-     return modelAndView;
-   }
-@PostMapping("/reviews")
-public String showreviews(Model model) {
-   return "/thank";
-}
-  
-@GetMapping("/about")
-public ModelAndView about() {
-  ModelAndView modelAndView=new ModelAndView("about");
-  return modelAndView;
-}
-@PostMapping("/about")
-public String showabout(Model model) {
-return "/about";
-}
-
-@GetMapping("/brands")
-public ModelAndView brands() {
-  ModelAndView modelAndView=new ModelAndView("brands");
-  return modelAndView;
-}
-@PostMapping("/brands")
-public String showbrands(Model model) {
-return "/brands";
-}
-
-@GetMapping("/contact")
-public ModelAndView contact() {
-  ModelAndView modelAndView=new ModelAndView("contact");
-  return modelAndView;
-}
-@PostMapping("/contact")
-public String showcontact(Model model) {
-return "/contact";
-}
-
  
    @RequestMapping("/")
    public String home() {
@@ -135,8 +124,7 @@ return "/contact";
      ModelAndView modelAndView=new ModelAndView("orderFinal");
      return modelAndView;
    }
- 
-   // Product List
+  
    @RequestMapping({ "/productList" })
    public String listProductHandler(Model model, //
          @RequestParam(value = "name", defaultValue = "") String likeName,
@@ -150,8 +138,28 @@ return "/contact";
       model.addAttribute("paginationProducts", result);
       return "productList";
    }
-   
-   @RequestMapping({ "/fastProduct" })
+ 
+   @RequestMapping({ "/buyProduct" })
+   public String listProductHandler(HttpServletRequest request, Model model, //
+         @RequestParam(value = "code", defaultValue = "") String code) {
+ 
+      Product product = null;
+      if (code != null && code.length() > 0) {
+         product = productDAO.findProduct(code);
+      }
+      if (product != null) {
+ 
+         //
+         CartInfo cartInfo = Utils.getCartInSession(request);
+ 
+         ProductInfo productInfo = new ProductInfo(product);
+ 
+         cartInfo.addProduct(productInfo, 1);
+      }
+ 
+      return "redirect:/shoppingCart";
+   }
+  @RequestMapping({ "/fastProduct" })
    public String list1ProductHandler(HttpServletRequest request, Model model, //
          @RequestParam(value = "code", defaultValue = "") String code) {
  
@@ -171,57 +179,6 @@ return "/contact";
  
       return "redirect:/Buy";
    }
- 
-   
-   @RequestMapping({ "/buyProduct" })
-   public String ProductHandler(HttpServletRequest request, Model model, //
-       
-		   @RequestParam(value = "code", defaultValue = "") String code) {
- 
-      Product product = null;
-      if (code != null && code.length() > 0) {
-         product = productDAO.findProduct(code);
-      }
-      if (product != null) {
- 
-         //
-         CartInfo cartInfo = Utils.getCartInSession(request);
- 
-         ProductInfo productInfo = new ProductInfo(product);
- 
-         cartInfo.addProduct(productInfo, 1);
-      }
- 
-      return "redirect:/shoppingCart";
-   }
-   @GetMapping("/payment")
-   public String getPaymentpage() {
-  	 return "/payment";
-   }
-   @RequestMapping({ "/fastproduct" })
-   public String listProductHandler(HttpServletRequest request, Model model, //
-       
-		   @RequestParam(value = "code", defaultValue = "") String code) {
- 
-      Product product = null;
-      if (code != null && code.length() > 0) {
-         product = productDAO.findProduct(code);
-      }
-      if (product != null) {
- 
-         //
-         CartInfo cartInfo = Utils.getCartInSession(request);
- 
-         ProductInfo productInfo = new ProductInfo(product);
- 
-         cartInfo.addProduct(productInfo, 1);
-      }
- 
-      return "redirect:/buy";
-   }
-   
-   
- 
    @RequestMapping({ "/shoppingCartRemoveProduct" })
    public String removeProductHandler(HttpServletRequest request, Model model, //
          @RequestParam(value = "code", defaultValue = "") String code) {
@@ -264,6 +221,27 @@ return "/contact";
       model.addAttribute("myCart", cartInfo);
       return "shoppingCart";
    }
+   @RequestMapping(value = { "/Buy" }, method = RequestMethod.POST)
+   public String buyUpdateQty(HttpServletRequest request, //
+         Model model, //
+         @ModelAttribute("cartForm") CartInfo cartForm) {
+ 
+      CartInfo cartInfo = Utils.getCartInSession(request);
+      cartInfo.updateQuantity(cartForm);
+ 
+      return "redirect:/Buy";
+   }
+   
+   @RequestMapping(value = { "/Buy" }, method = RequestMethod.GET)
+   public String buyHandler(HttpServletRequest request, Model model) {
+      CartInfo myCart = Utils.getCartInSession(request);
+      CartInfo cartInfo = Utils.getCartInSession(request);
+ 
+      model.addAttribute("cartForm", myCart);
+      model.addAttribute("myCart", cartInfo);
+      return "Buy";
+   }
+ 
  
    // GET: Enter customer information.
    @RequestMapping(value = { "/shoppingCartCustomer" }, method = RequestMethod.GET)
@@ -295,7 +273,7 @@ return "/contact";
       if (result.hasErrors()) {
          customerForm.setValid(false);
          // Forward to reenter customer info.
-         return "shoppingCartCustomer";
+         return "orderFinal";
       }
  
       customerForm.setValid(true);
@@ -304,26 +282,6 @@ return "/contact";
       cartInfo.setCustomerInfo(customerInfo);
  
       return "redirect:/shoppingCartConfirmation";
-   }
-   @RequestMapping(value = { "/Buy" }, method = RequestMethod.POST)
-   public String buyUpdateQty(HttpServletRequest request, //
-         Model model, //
-         @ModelAttribute("cartForm") CartInfo cartForm) {
- 
-      CartInfo cartInfo = Utils.getCartInSession(request);
-      cartInfo.updateQuantity(cartForm);
- 
-      return "redirect:/Buy";
-   }
-   
-   @RequestMapping(value = { "/Buy" }, method = RequestMethod.GET)
-   public String buyHandler(HttpServletRequest request, Model model) {
-      CartInfo myCart = Utils.getCartInSession(request);
-      CartInfo cartInfo = Utils.getCartInSession(request);
- 
-      model.addAttribute("cartForm", myCart);
-      model.addAttribute("myCart", cartInfo);
-      return "Buy";
    }
  
    // GET: Show information to confirm.

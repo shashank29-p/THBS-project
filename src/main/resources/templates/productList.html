@@ -46,11 +46,11 @@
       <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
 <span class="fa fa-star checked"></span>
-<span class="fa fa-star"></span>
+<span class="fa fa-star checked"></span>
 <span class="fa fa-star"></span>
 </p>
-      <a th:href="@{|/buyProduct?code=${prodInfo.code}|}" class="btn btn-link" >add to cart</a>
-      <a th:href="@{|/Buy?code=${prodInfo.code}|}" class="btn btn-link" >Buy Now</a>
+      <a th:href="@{|/buyProduct?code=${prodInfo.code}|}" class="btn btn-link" >Add to cart</a>
+      <a th:href="@{|/fastProduct?code=${prodInfo.code}|}" class="btn btn-link" >Buy Now</a>
             </div>
              </div>
              
@@ -89,7 +89,9 @@
             <span class="btn btn-dark" style="border-radius: 0%; margin:2px;" th:if="${page == -1}"> ... </span>
              
          </th:block>
+         <a href="#top">top</a>
          </div>
+         
          </div>
       </div> <!-- nav end -->
     </div><!-- container end -->

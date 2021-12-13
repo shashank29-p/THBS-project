@@ -33,6 +33,7 @@
 	</style>
 	
 </body>
+  
 <div class="body">
 <h1>Please complete Your Shopping through below Transactions</h1><br><br>
 <div>
@@ -44,8 +45,7 @@
 <p1><a style="color: red" href="https://dashboard.razorpay.com/signin?screen=sign_in&next=app%2Fdashboard">2. UPI - Razorpay</a></p1><br><br>
 <p1><a style="color: red" href="/orderFinal">3. Cash On Deliver</a></p1>
 <br><br>
-
-  <th:block th:if="${cartForm == null || cartForm.cartLines == null || cartForm.cartLines.empty}">
+ <th:block th:if="${cartForm == null || cartForm.cartLines == null || cartForm.cartLines.empty}">
          <a th:href="@{/productList}"></a>
       </th:block>
       
@@ -56,7 +56,7 @@
           <table class="table">
           
           <th:block th:if="${cartForm != null && cartForm.cartLines != null && !cartForm.cartLines.empty}">
-         <form method="POST" th:object="${cartForm}" th:action="@{/paymet}">
+         <form method="POST" th:object="${cartForm}" th:action="@{/payment}">
           
                <div class="product-preview-container"
                         th:each="cartLineInfo, varStatus : ${cartForm.cartLines}">
@@ -106,9 +106,10 @@
             <tr>
               <td>
                 Subtotal <i></i><br><br>
-                Quantity <br><br>
+                
                 Estimated Shipping & Handling<br><br>
-              </td>
+              </
+td>
               <td>
               
               Rs <span th:utext="${myCart.amountTotal}"></span><br><br>
@@ -134,6 +135,7 @@
 </div>   
 
         <!-- ------------------------------footer end---------------------------------- -->
+
        
       
        
